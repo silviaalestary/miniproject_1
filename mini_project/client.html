@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kapal WebSocket Client</title>
+    <style>
+        .notification {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .create { background-color: #dff0d8; border: 1px solid #d6e9c6; }
+        .update { background-color: #d9edf7; border: 1px solid #bce8f1; }
+        .delete { background-color: #f2dede; border: 1px solid #ebccd1; }
+        #notifications {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kapal WebSocket Client</h1>
+    <div id="status"></div>
+    <div id="notifications"></div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+        const notificationsDiv = document.getElementById('notifications');
+        const statusDiv = document.getElementById('status');
+
+        function updateStatus(message, isConnected) {
+            statusDiv.innerHTML = `
+                <div style="color: ${isConnected ? 'green' : 'red'}; 
+                            padding: 10px; 
+                            margin: 10px 0;
+                            border: 1px solid ${isConnected ? 'green' : 'red'};">
+                    ${message}
+                </div>
+            `;
+        }
+
+        function addNotification(data) {
+            const notifClass = data.event.includes('ditambahkan') ? 'create' : 
+                             data.event.includes('diperbarui') ? 'update' : 
+                             data.event.includes('dihapus') ? 'delete' : '';
+
+            const time = new Date().toLocaleTimeString();
+            
+            const notifHtml = `
+                <div class="notification ${notifClass}">
+                    <strong>[${time}] ${data.event}</strong><br>
+                    ${data.message}<br>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                </div>
+            `;
+            
+            notificationsDiv.insertAdjacentHTML('afterbegin', notifHtml);
+        }
+
+        ws.onopen = () => {
+            console.log('Terhubung ke server WebSocket');
+            updateStatus('Terhubung ke server WebSocket', true);
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log('Notifikasi:', data);
+            addNotification(data);
+        };
+
+        ws.onclose = () => {
+            console.log('Terputus dari server WebSocket');
+            updateStatus('Terputus dari server WebSocket', false);
+            
+            // Mencoba koneksi ulang setelah 5 detik
+            setTimeout(() => {
+                window.location.reload();
+            }, 5000);
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            updateStatus('Error pada koneksi WebSocket', false);
+        };
+    </script>
+</body>
+</html> 

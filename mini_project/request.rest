@@ -1,0 +1,63 @@
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin"
+}
+
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin123"
+}
+
+###
+POST http://localhost:3000/kapal
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNTMwODU5NiwiZXhwIjoxNzM1Mzk0OTk2fQ.V7_qjYH7vQEBYsyK26XTNgvb0msTv6ex-5-THjd5o88
+Content-Type: application/json
+
+{
+    "nama_kapal": "Laut Biru",
+    "jenis_kapal": "Penangkap Ikan",
+    "kapasitas_muatan": 5000
+}
+
+###
+GET http://localhost:3000/kapal
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNTMwODU5NiwiZXhwIjoxNzM1Mzk0OTk2fQ.V7_qjYH7vQEBYsyK26XTNgvb0msTv6ex-5-THjd5o88
+
+###
+PUT http://localhost:3000/kapal/1
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNTMwODU5NiwiZXhwIjoxNzM1Mzk0OTk2fQ.V7_qjYH7vQEBYsyK26XTNgvb0msTv6ex-5-THjd5o88
+Content-Type: application/json
+
+{
+    "nama_kapal": "Laut Biru Update",
+    "jenis_kapal": "Penangkap Ikan",
+    "kapasitas_muatan": 6000
+}
+
+###
+DELETE http://localhost:3000/kapal/1
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNTMwODU5NiwiZXhwIjoxNzM1Mzk0OTk2fQ.V7_qjYH7vQEBYsyK26XTNgvb0msTv6ex-5-THjd5o88
+
+###
+POST http://localhost:3000/auth/register
+Headers:
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTczNTMwODU5NiwiZXhwIjoxNzM1Mzk0OTk2fQ.V7_qjYH7vQEBYsyK26XTNgvb0msTv6ex-5-THjd5o88
+Content-Type: application/json
+
+{
+    "username": "user1",
+    "password": "user123",
+    "role": "user"
+}
